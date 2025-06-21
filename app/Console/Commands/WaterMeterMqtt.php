@@ -34,12 +34,12 @@ class WaterMeterMqtt extends Command
             while (true) {
                 Log::info("water meter mqtt:" . time());
                 if (random_int(1, 1000) > 990) {
-                    throw new \Exception("water meter mqtt error");
+                    throw new \Exception("water meter mqtt error", 5000);
                 }
             }
         } catch (\Exception $e) {
             Log::error('Command failed: ' . $e->getMessage());
-            return $e->getCode(); // 非0退出码会触发Supervisor重启
+            exit($e->getCode());
         }
     }
 }
