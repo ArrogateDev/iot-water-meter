@@ -20,6 +20,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "mews/captcha": "^3.3",
+        "php-mqtt/client": "^2.2",
         "rap2hpoutre/fast-excel": "^5.4"
     },
     "require-dev": {
