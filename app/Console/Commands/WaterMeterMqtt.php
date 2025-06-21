@@ -37,9 +37,10 @@ class WaterMeterMqtt extends Command
                     throw new \Exception("water meter mqtt error", 5000);
                 }
             }
+
         } catch (\Exception $e) {
             Log::error('Command failed: ' . $e->getMessage());
-            exit($e->getCode());
+            return 1;
         }
     }
 }
