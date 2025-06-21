@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\WaterMeterDataJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -39,23 +40,37 @@ class WaterMeterMqtt extends Command
 
             $mqtt->subscribe('/watermeters/data/32', function ($topic, $message) {
                 Log::channel('mqtt')->info($topic . '|' . $message);
+                $this->saveWaterMeterData($message);
             }, 0);
 
             $mqtt->subscribe('/watermeters/data/105', function ($topic, $message) {
                 Log::channel('mqtt')->info($topic . '|' . $message);
+                $this->saveWaterMeterData($message);
             }, 0);
 
             $mqtt->subscribe('/watermeters/data/144', function ($topic, $message) {
                 Log::channel('mqtt')->info($topic . '|' . $message);
+                $this->saveWaterMeterData($message);
             }, 0);
 
             $mqtt->loop(true);
             $mqtt->disconnect();
 
+            return 0;
         } catch (\Exception $e) {
             $mqtt && $mqtt->disconnect();
             Log::error('Command failed: ' . $e->getMessage());
             return 1;
         }
+    }
+
+    /**
+     * @param $message
+     * @return void
+     */
+    private function saveWaterMeterData($message)
+    {
+        $params = json_decode($message, true);
+        WaterMeterDataJob::dispatch($params);
     }
 }

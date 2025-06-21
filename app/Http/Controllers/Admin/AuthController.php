@@ -24,7 +24,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $account = $request->input('username');
+        $account = $request->input('account');
         $password = $request->input('password');
 
         $code_key = (string)$request->input('imgCodeKey');

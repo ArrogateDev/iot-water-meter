@@ -25,6 +25,9 @@ Route::get('get-captcha', [CommonController::class, 'captcha']);
 //登录
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('get-dashboard', [DashboardController::class, 'getDashboard']);
+Route::get('get-dashboard-single', [DashboardController::class, 'getDashboardSingle']);
+
 Route::group(['middleware' => ['auth:sanctum', 'abilities:admin']], function ($route) {
 
     //公共模块
