@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $last_updated_at = Carbon::parse($daily_data->last_updated_at);
 
         $result['current_reading'] = $daily_data->water_meter_reading;
-        $result['today_usage'] = $last_daily_data->water_meter_reading;
+        $result['today_usage'] = bcsub($daily_data->water_meter_reading, $last_daily_data->water_meter_reading, 2);
         $result['last_updated_at'] = $last_updated_at->copy()->format('d-M-Y H:i:s');
 
         $month_data = WaterMeterMonthData::get($meter_id, $now->copy());
