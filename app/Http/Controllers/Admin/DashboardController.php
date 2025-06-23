@@ -34,20 +34,16 @@ class DashboardController extends Controller
 
         $month_data = WaterMeterMonthData::get($meter_id, $now->copy());
         $last_month_data = WaterMeterMonthData::get($meter_id, $now->copy()->subMonth());
-        $the_month_before_last_month_data = WaterMeterMonthData::get($meter_id, $now->copy()->subMonths(2));
 
         $month_meter_reading = $month_data->water_meter_reading ?? 0;
         $last_month_meter_reading = $last_month_data->water_meter_reading ?? 0;
-        $b_last_month_meter_reading = $the_month_before_last_month_data->water_meter_reading ?? 0;
 
         $result['monthly_bill'] = bcmul($month_meter_reading, 3, 2);
         $result['monthly_usage'] = $month_meter_reading;
 
         $result['last_month_bill'] = bcmul($last_month_meter_reading, 3, 2);
         $result['month_bill_change'] = $last_month_meter_reading > 0 ? bcdiv(bcsub($month_meter_reading, $last_month_meter_reading, 2), $last_month_meter_reading, 2) * 100 : 0;
-        $result['last_month_bill_change'] = 0;
         $result['last_month_usage'] = $last_month_meter_reading;
-        $result['last_month_usage_change'] = $b_last_month_meter_reading > 0 ? bcdiv(bcsub($last_month_meter_reading, $b_last_month_meter_reading, 2), $b_last_month_meter_reading, 2) * 100 : 0;
         $result['status'] = 1;
 
         $chart = [];
