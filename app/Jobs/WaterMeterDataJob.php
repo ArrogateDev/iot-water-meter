@@ -38,7 +38,7 @@ class WaterMeterDataJob implements ShouldQueue
         $meter_id = $params['meter_id'] ?? null;
         $date = $params['date'] ?? null;
         $time = $params['time'] ?? null;
-        $water_meter_reading = $params['water_meter_reading'] ?? null;
+        $water_meter_reading = $params['meter_reading'] ?? null;
 
         if ($meter_id === null || $date === null || $time === null || $water_meter_reading === null) return;
 
