@@ -68,7 +68,7 @@ class WaterMeterDataJob implements ShouldQueue
                 throw new \Exception('log:failed');
             }
 
-            if ($now->copy()->gt(Carbon::parse($daily_data->last_updated_at))) {
+            if (empty($daily_data->last_updated_at) || $now->copy()->gt(Carbon::parse($daily_data->last_updated_at))) {
                 $daily_data->water_meter_reading = $water_meter_reading;
                 $daily_data->last_updated_at = $now;
                 if ($daily_data->save() === false) {
@@ -76,7 +76,7 @@ class WaterMeterDataJob implements ShouldQueue
                 }
             }
 
-            if ($now->copy()->gt(Carbon::parse($month_data->last_updated_at))) {
+            if (empty($month_data->last_updated_at) || $now->copy()->gt(Carbon::parse($month_data->last_updated_at))) {
                 $month_data->water_meter_reading = $water_meter_reading;
                 $month_data->last_updated_at = $now;
                 if ($month_data->save() === false) {
