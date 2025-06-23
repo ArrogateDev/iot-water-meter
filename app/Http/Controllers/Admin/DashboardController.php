@@ -31,16 +31,16 @@ class DashboardController extends Controller
 
         $month_data = WaterMeterMonthData::get($meter_id, $now->copy());
 
-        $result['monthly_bill'] = $month_data->water_meter_reading * 3;
+        $result['monthly_bill'] = bcmul($month_data->water_meter_reading, 3, 2);
         $result['monthly_usage'] = $month_data->water_meter_reading;
 
         $last_month_data = WaterMeterMonthData::get($meter_id, $now->copy()->subMonth());
 
-        $result['last_month_bill'] = $last_month_data->water_meter_reading * 3;
-        $result['last_month_bill_change'] = random_int(-100, 100);
+        $result['last_month_bill'] = bcmul($last_month_data->water_meter_reading, 3, 2);
+        $result['last_month_bill_change'] = 0;
         $result['last_month_usage'] = $last_month_data->water_meter_reading;
-        $result['last_month_usage_change'] = random_int(-100, 100);
-        $result['status'] = random_int(0, 1);
+        $result['last_month_usage_change'] = 0;
+        $result['status'] = 1;
 
         $chart = [];
         $start_date = $now->copy()->subYear();
