@@ -84,6 +84,8 @@ class WaterMeterDataJob implements ShouldQueue
                 }
             }
 
+            WaterMeterDataNotificationJob::dispatch($meter_id)->afterCommit();
+
             DB::commit();
 
         } catch (\Exception $e) {
