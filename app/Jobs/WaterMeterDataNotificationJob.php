@@ -32,7 +32,7 @@ class WaterMeterDataNotificationJob implements ShouldQueue
         try {
             $meter_id = $this->meter_id;
 
-            Gateway::$registerAddress = '127.0.0.1:1230';
+            Gateway::$registerAddress = '0.0.0.0:1230';
 
             if (Gateway::getAllClientIdCount() > 0) {
                 $result = WaterMeterDashboard::getDashboardSingle($meter_id);
